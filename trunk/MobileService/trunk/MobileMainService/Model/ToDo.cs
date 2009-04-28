@@ -51,5 +51,24 @@ namespace Disappearwind.MobileService.MobileMainService
             Content = content;
             Time = dt;
         }
+        /// <summary>
+        /// Juge is two datetime equal
+        /// </summary>
+        /// <param name="dt1">first time</param>
+        /// <param name="dt2">second time</param>
+        /// <returns></returns>
+        public bool IsEqualTime(DateTime dt1, DateTime dt2)
+        {
+            if (dt1 == dt2)
+            {
+                return true;
+            }
+            TimeSpan ds = dt1 - dt2;
+            if (ds.Ticks < 0 && ds.Ticks >= -10001000)
+            {
+                return true;
+            }
+            return false;
+        }
     }
 }
