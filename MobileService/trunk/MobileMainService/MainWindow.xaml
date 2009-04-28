@@ -1,0 +1,18 @@
+﻿<Window x:Class="Disappearwind.MobileService.MobileMainService.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Mobile Service" Height="600" Width="800"  Loaded="Window_Loaded"
+       Closing="Window_Closing" Closed="Window_Closed">
+    <StackPanel>
+        <StackPanel>
+            <Menu>
+                <MenuItem Header="Schedule">
+                    <MenuItem Header="ToDo" Name="miScheduleToDO" Click="miScheduleToDO_Click"></MenuItem>
+                </MenuItem>
+                <MenuItem Header="System"></MenuItem>
+            </Menu>
+        </StackPanel>
+        <StackPanel Name="spContent">
+        </StackPanel>
+    </StackPanel>
+</Window>
