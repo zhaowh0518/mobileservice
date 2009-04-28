@@ -72,7 +72,7 @@ namespace Disappearwind.MobileService.UnitTest
             long sendNumber = 13488794972;
             string password = "disappearwind";
             long reviceNumber = 13488794972;
-            string content = "test";
+            string content = "unittest2";
             try
             {
                 FetionMainService.SendMessage(sendNumber, password, reviceNumber, content);
