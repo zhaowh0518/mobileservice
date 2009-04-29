@@ -34,7 +34,7 @@ namespace Disappearwind.MobileService.MobileMainService
         {
             if (CheckInput())
             {
-                MainDispatcher.ToDoList.Add(new ToDo(txtContent.Text, Convert.ToDateTime(txtDateTime.Text)));
+                MainDispatcher.TODOList.Add(new ToDo(txtContent.Text, Convert.ToDateTime(txtDateTime.Text)));
                 MainDispatcher.ShowInfoMessage("Have added in sequence!");
                 BindToDoList();
             }
@@ -50,7 +50,7 @@ namespace Disappearwind.MobileService.MobileMainService
             }
             else
             {
-                var c = MainDispatcher.ToDoList.Where(p => p.Content == txtContent.Text);
+                var c = MainDispatcher.TODOList.Where(p => p.Content == txtContent.Text);
                 if (c.Count() > 0)
                 {
                     MessageBoxResult mbResult = MessageBox.Show("Sequence has same content,would you go on add the content?",
@@ -76,14 +76,14 @@ namespace Disappearwind.MobileService.MobileMainService
         }
         private void BindToDoList()
         {
-            if (MainDispatcher.ToDoList.Count == 0)
+            if (MainDispatcher.TODOList.Count == 0)
             {
                 lvToDoList.Visibility = Visibility.Hidden;
             }
             else
             {
                 lvToDoList.Visibility = Visibility.Visible;
-                lvToDoList.ItemsSource = MainDispatcher.ToDoList.OrderBy(p => p.Time);
+                lvToDoList.ItemsSource = MainDispatcher.TODOList.OrderBy(p => p.Time);
             }
         }
     }
