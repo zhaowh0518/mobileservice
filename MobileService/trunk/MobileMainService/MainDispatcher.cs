@@ -31,13 +31,16 @@ namespace Disappearwind.MobileService.MobileMainService
         /// List to do something.
         /// depend ToDo model class
         /// </summary>
-        public static List<ToDo> ToDoList = new List<ToDo>();
+        public static ToDoList TODOList = new ToDoList();
         /// <summary>
         /// Default constructor.do some services
         /// </summary>
         public MainDispatcher()
         {
+            TODOList.LoadFromXmlFile();
+            //add service thread
             SendMessageServcie();
+            SaveMessageService();
         }
         /// <summary>
         /// Show friend infomation message
@@ -62,17 +65,26 @@ namespace Disappearwind.MobileService.MobileMainService
         {
             while (true)
             {
-                foreach (var item in ToDoList)
+                foreach (var item in TODOList)
                 {
                     if (item.IsEqualTime(item.Time,DateTime.Now))
                     {
                         FetionMainService.SendMessage(CurrentMobileUserInfo.Number,
                             CurrentMobileUserInfo.Password, CurrentMobileUserInfo.Number, item.Content);
+                        TODOList.DoneItem(item);
                     }
                     Thread.Sleep(new TimeSpan(99));
                 }
                 Thread.Sleep(1000);
             }
+        }
+        /// <summary>
+        /// Save message to file
+        /// </summary>
+        private void SaveMessageService()
+        {
+            Thread t = new Thread(new ThreadStart(delegate { while (true) { TODOList.SaveToXmlFile(); Thread.Sleep(10000); } }));
+            t.Start();
         }
     }
 }

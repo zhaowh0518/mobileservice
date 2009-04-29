@@ -1,17 +1,17 @@
 ﻿using Disappearwind.MobileService.MobileMainService;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-
+using System.IO;
 namespace Disappearwind.MobileService.UnitTest
 {
     
     
     /// <summary>
-    ///This is a test class for ToDoTest and is intended
-    ///to contain all ToDoTest Unit Tests
+    ///This is a test class for ToDoListTest and is intended
+    ///to contain all ToDoListTest Unit Tests
     ///</summary>
     [TestClass()]
-    public class ToDoTest
+    public class ToDoListTest
     {
 
 
@@ -65,36 +65,44 @@ namespace Disappearwind.MobileService.UnitTest
 
 
         /// <summary>
-        ///A test for IsEqualTime
+        ///A test for SaveToXmlFile
         ///</summary>
         [TestMethod()]
-        public void IsEqualTimeTest()
+        public void SaveToXmlFileTest()
         {
-            ToDo target = new ToDo(); // TODO: Initialize to an appropriate value
-            DateTime dt1 = new DateTime(); // TODO: Initialize to an appropriate value
-            DateTime dt2 = new DateTime(); // TODO: Initialize to an appropriate value
-            bool expected = true; // TODO: Initialize to an appropriate value
-            bool actual;
-            dt1 = DateTime.Now;
-            System.Threading.Thread.Sleep(1000);
-            dt2 = DateTime.Now;
-            actual = target.IsEqualTime(dt1, dt2);
-            Assert.AreEqual(expected, actual);
+            ToDoList target = new ToDoList();
+            GetToDoList(target);
+            target.SaveToXmlFile();
+            string dataPath = target.GetDataPath();
+            DirectoryInfo di = new DirectoryInfo(dataPath);
+            FileInfo[] files = di.GetFiles();
+            Assert.IsTrue(files.Length == 10);
+        }
+
+        private static void GetToDoList(ToDoList target)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                ToDo td = new ToDo();
+                td.ID = Guid.NewGuid();
+                td.Content = string.Format("test{0}", i);
+                td.Time = DateTime.Now;
+                target.Add(td);
+            }
         }
 
         /// <summary>
-        ///A test for ToXml
+        ///A test for LoadFromXmlFile
         ///</summary>
         [TestMethod()]
-        public void ToXmlTest()
+        public void LoadFromXmlFileTest()
         {
-            ToDo target = new ToDo(); // TODO: Initialize to an appropriate value
-            target.ID = Guid.NewGuid();
-            target.Content = "test";
-            target.Time = DateTime.Now;
-            string actual;
-            actual = target.ToXml();
-            Assert.Inconclusive(actual);
+            ToDoList target = new ToDoList();
+            GetToDoList(target);
+            target.SaveToXmlFile();
+            target.Clear();
+            target.LoadFromXmlFile();
+            Assert.IsTrue(target.Count == 10);
         }
     }
 }
